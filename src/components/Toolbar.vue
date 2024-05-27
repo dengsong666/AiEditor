@@ -6,7 +6,10 @@ import InsertLink from "./InsertLink.vue";
 import InsertEmoji from "./InsertEmoji.vue";
 import InsertHead from "./InsertHead.vue";
 import { isVNode } from "vue";
-import SetFontSize from "./SetFontSize.vue";
+import SetTextAlign from "./SetTextAlign.vue";
+import Select from "./Select.vue";
+import Upload from "./Upload.vue";
+
 type AddSuffix<T extends string, S extends string> = `${T}${S}`
 interface ToolOption {
   icon: string | VNode
@@ -17,7 +20,7 @@ interface ToolOption {
 }
 type Tool = keyof typeof actions;
 type ToolFold = Exclude<AddSuffix<Tool, "-fold">, 'head-fold' | 'fontsize-fold' | 'emoji-fold' | 'img-fold' | 'video-fold' | 'attachment-fold' | 'link-fold' | 'highlight-fold' | 'fontcolor-fold' | 'table-fold'>
-const props = defineProps<{ tools?: (Tool | ToolFold)[] }>()
+const props = defineProps<{ tools?: (Tool | ToolFold | '|')[] }>()
 const actions = {
   undo: {
     icon: 'i-icon-park-outline:back',
@@ -32,12 +35,29 @@ const actions = {
     action: () => focus.value?.redo().run()
   },
   head: {
-    icon: h(InsertHead, { onInsert: (level) => focus.value?.toggleHeading({ level }).run() }),
+    icon: h(InsertHead, { onInsert: (level) => level ? focus.value?.toggleHeading({ level }).run() : focus.value?.setParagraph().run() }),
     label: '标题',
   },
   fontsize: {
-    icon: h(SetFontSize, { onSet: (size) => focus.value?.setFontSize(size).run() }),
+    icon: h(Select, {
+      onSelect: (size: string) => focus.value?.setFontSize(size).run(), icon: 'i-ant-design:font-size-outlined',
+      options: [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 56, 64, 72, 88].map(label => ({ label, value: `${label}px` }))
+    }),
     label: '字体大小',
+  },
+  fontfamily: {
+    icon: h(Select, {
+      onSelect: (font) => focus.value?.setFontFamily(font).run(), icon: 'i-mdi:format-font',
+      options: [['微软雅黑', 'Microsoft YaHei'], ['宋体', 'SimSun'], ['黑体', 'SimHei'], ['楷体', 'KaiTi'], ['隶书', 'LiSu'], ['幼圆', 'YouYuan'], ['Arial'], ['Verdana']].map(([label, value = label]) => ({ label, value }))
+    }),
+    label: '字体',
+  },
+  lineheight: {
+    icon: h(Select, {
+      onSelect: (lh) => focus.value?.setLineHeight(lh).run(), icon: 'i-mdi:format-line-height',
+      options: [1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3].map(label => ({ label, value: `${label}em` }))
+    }),
+    label: '行高',
   },
   bold: {
     icon: 'i-icon-park-outline:text-bold',
@@ -127,7 +147,7 @@ const actions = {
     action: () => focus.value?.toggleSubscript().run()
   },
   img: {
-    icon: 'i-icon-park-outline:picture-one',
+    icon: h(Upload, { onFinish: ({ src, alt, title, caption }) => focus.value?.setFigure({ src, alt, title, caption }).run(), icon: 'i-icon-park-outline:picture-one' }),
     label: '图像',
   },
   video: {
@@ -155,6 +175,10 @@ const actions = {
     icon: h(ColorPicker, { onPick: (color) => focus.value?.setColor(color).run(), icon: 'i-ant-design:font-colors-outlined' }),
     label: '字体颜色',
   },
+  textalign: {
+    icon: h(SetTextAlign, { onSet: (align) => focus.value?.setTextAlign(align).run() }),
+    label: '文字对齐',
+  },
   table: {
     icon: h(InsertTable, { onInsert: ([rows, cols]) => focus.value?.insertTable({ rows, cols, withHeaderRow: true }).run() }),
     label: '表格',
@@ -170,11 +194,11 @@ const actions = {
     action: () => { }
   }
 }
-const unfoldTools = ref<ToolOption[]>([])
+const unfoldTools = ref<(ToolOption | '|')[]>([])
 const foldTools = ref<ToolOption[]>([])
 watchEffect(() => {
   if (props.tools)
-    props.tools.forEach(tool => tool.endsWith('-fold') ? foldTools.value.push(actions[tool.replace('-fold', '') as Tool] as ToolOption) : unfoldTools.value.push(actions[tool as Tool] as ToolOption))
+    props.tools.forEach(tool => tool.endsWith('-fold') ? foldTools.value.push(actions[tool.replace('-fold', '') as Tool]) : unfoldTools.value.push(tool === '|' ? tool : actions[tool as Tool]))
   else unfoldTools.value = Object.values(actions) as ToolOption[]
 })
 </script>
@@ -182,7 +206,8 @@ watchEffect(() => {
 <template>
   <div flex bg-white>
     <template v-for="action in unfoldTools" :key="action.key">
-      <div :class="['tool', { 'is-active': editor?.isActive('bold') }]">
+      <div v-if="action === '|'" px8px lh-32px text-gray-300>|</div>
+      <div v-else :class="['tool', { 'is-active': editor?.isActive('bold') }]">
         <Tooltip :text="`${action.label}${action.shortcut ? ' ' + action.shortcut : ''}`" place="bottom">
           <component v-if="isVNode(action.icon)" :is="action.icon" />
           <i v-else :class="action.icon" @click="action.action && action.action()"></i>

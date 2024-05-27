@@ -1,5 +1,4 @@
 <script lang='ts' setup>
-defineProps<{ icon?: string }>()
 const emit = defineEmits(['insert'])
 const head = [
   {
@@ -45,15 +44,18 @@ const head = [
     label: '标题6',
   },
 ]
+
+const current = ref('i-icon-park-outline:title-level')
 </script>
 
 <template>
   <Popover :close="false" padding="8px">
     <template #trigger>
-      <i i-icon-park-outline:title-level></i>
+      <i :class="current"></i>
     </template>
     <div flex flex-col>
-      <div v-for="(item, idx) in head" :key="idx" hover:bg-gray-100 @click="emit('insert', idx + 1)">
+      <div v-for="(item, idx) in head" :key="idx" hover:bg-gray-100 p8px
+        @click="current = item.icon, emit('insert', idx)">
         <Tooltip flex items-center :text="`${item.markdown} ${item.shortcut}`" place="right">
           <i :class="item.icon"></i>
           <span ml8px text-nowrap>{{ item.label }}</span>

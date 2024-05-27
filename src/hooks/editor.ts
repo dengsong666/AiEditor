@@ -21,7 +21,8 @@ export function useAiEditor() {
           console.log("Buzz");
         else
           console.log(i);
-      }`,
+      } 
+      `,
     extensions: [
       Block, Browser, Code, Cursor, Division, File, Head, List, Mark, Menu, Table,
       Mention.configure({
