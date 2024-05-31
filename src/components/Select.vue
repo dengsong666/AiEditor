@@ -1,18 +1,22 @@
 <script lang='ts' setup>
-type Option = { label: any, value: string }
+type Option = { label: any, value: any }
 defineProps<{ options: Option[], icon?: string }>()
 const emit = defineEmits(['select'])
+const refPopover = ref()
 </script>
 
 <template>
-  <Popover padding="8px" :close="false">
+  <Popover ref="refPopover" padding="8px" :close="false">
     <template #trigger>
-      <i :class="icon"></i>
+      <div flex>
+        <i :class="icon"></i>
+        <i i-icon-park-outline:down transition-all :class="{ 'rotate-180': refPopover?.show }"></i>
+      </div>
     </template>
-    <div flex flex-col max-h200px overflow-y-auto scrollbar-none>
+    <div flex flex-col scrollbar-none>
       <span v-for="op in options" :key="op.value" @click="emit('select', op.value)" text-nowrap text-center px20px py6px
         hover:bg-gray-100>
-        {{ op.label }}
+        <slot :value="op.value"> {{ op.label }}</slot>
       </span>
     </div>
   </Popover>

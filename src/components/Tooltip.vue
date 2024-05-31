@@ -26,7 +26,7 @@ $size: v-bind(size);
   color: #fff;
   padding: $size;
   position: absolute;
-  z-index: 20;
+  z-index: 1000;
   white-space: nowrap;
   border-radius: $size;
   background-color: $bg;
