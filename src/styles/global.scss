@@ -1,0 +1,65 @@
+@mixin place($size: 0, $sizec: 100%, $c: #000, $bg: #fff, $offset: 0) {
+  color: $c;
+  padding: $size;
+  position: absolute;
+  z-index: 1000;
+  white-space: nowrap;
+  border-radius: $size;
+  background-color: $bg;
+
+  &.top,
+  &.bottom {
+    left: $offset;
+    transform: translateX(-$offset);
+
+    &>span {
+      left: 50%;
+    }
+  }
+
+  &.top {
+    bottom: $sizec;
+
+    &>span {
+      bottom: 0;
+      transform: translate(-50%, 100%);
+    }
+  }
+
+  &.bottom {
+    top: $sizec;
+
+    &>span {
+      top: 0;
+      transform: translate(-50%, -100%);
+    }
+  }
+
+  &.left,
+  &.right {
+    top: $offset;
+    transform: translateY(-$offset);
+
+    &>span {
+      top: 50%;
+    }
+  }
+
+  &.left {
+    right: $sizec;
+
+    &>span {
+      right: 0;
+      transform: translate(100%, -50%);
+    }
+  }
+
+  &.right {
+    left: $sizec;
+
+    &>span {
+      left: 0;
+      transform: translate(-100%, -50%);
+    }
+  }
+}

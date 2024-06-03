@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { isVNode } from "vue";
 import { focus, editor } from "@/hooks/editor"
 import ColorPicker from "./ColorPicker.vue";
 import InsertTable from "./InsertTable.vue";
 import InsertLink from "./InsertLink.vue";
 import InsertEmoji from "./InsertEmoji.vue";
 import Tooltip from "./Tooltip.vue";
-import { isVNode } from "vue";
 import SetTextAlign from "./SetTextAlign.vue";
 import Select from "./Select.vue";
 import Upload from "./Upload.vue";
+import { head } from "@/core/menu"
 
 type AddSuffix<T extends string, S extends string> = `${T}${S}`
 interface ToolOption {
@@ -22,50 +23,6 @@ interface ToolOption {
 type Tool = keyof typeof actions;
 type ToolFold = Exclude<AddSuffix<Tool, "-fold">, 'head-fold' | 'fontsize-fold' | 'emoji-fold' | 'img-fold' | 'video-fold' | 'attachment-fold' | 'link-fold' | 'highlight-fold' | 'fontcolor-fold' | 'table-fold'>
 const props = defineProps<{ tools?: (Tool | ToolFold | '|')[] }>()
-const head = [
-  {
-    icon: 'i-icon-park-outline:h',
-    shortcut: 'Ctrl+Alt+0',
-    markdown: '',
-    label: '正文',
-  },
-  {
-    icon: 'i-icon-park-outline:h1',
-    shortcut: 'Ctrl+Alt+1',
-    markdown: '# ',
-    label: '标题1',
-  },
-  {
-    icon: 'i-icon-park-outline:h2',
-    shortcut: 'Ctrl+Alt+2',
-    markdown: '## ',
-    label: '标题2',
-  },
-  {
-    icon: 'i-icon-park-outline:h3',
-    shortcut: 'Ctrl+Alt+3',
-    markdown: '### ',
-    label: '标题3',
-  },
-  {
-    icon: 'i-icon-park-outline:level-four-title',
-    shortcut: 'Ctrl+Alt+4',
-    markdown: '#### ',
-    label: '标题4',
-  },
-  {
-    icon: 'i-icon-park-outline:level-five-title',
-    shortcut: 'Ctrl+Alt+5',
-    markdown: '##### ',
-    label: '标题5',
-  },
-  {
-    icon: 'i-icon-park-outline:level-six-title',
-    shortcut: 'Ctrl+Alt+6',
-    markdown: '###### ',
-    label: '标题6',
-  },
-]
 const actions: { [key in string]: ToolOption } = {
   undo: {
     icon: 'i-icon-park-outline:back',
@@ -117,6 +74,7 @@ const actions: { [key in string]: ToolOption } = {
       onSelect: (lh) => focus.value?.setLineHeight(lh).run(), icon: 'i-mdi:format-line-height',
       options: [1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3].map(label => ({ label, value: `${label}em` }))
     }),
+    active: ['paragraph'],
     label: '行高',
   },
   bold: {
@@ -189,6 +147,7 @@ const actions: { [key in string]: ToolOption } = {
     icon: 'i-icon-park-outline:quote',
     label: '引用',
     shortcut: 'Ctrl+Shift+B',
+    active: ['paragraph'],
     action: () => focus.value?.toggleBlockquote().run()
   },
   hardbreak: {
@@ -202,18 +161,21 @@ const actions: { [key in string]: ToolOption } = {
     icon: 'i-icon-park-outline:dividing-line',
     label: '分割线',
     shortcut: '',
+    active: ['paragraph'],
     action: () => focus.value?.setHorizontalRule().run()
   },
   sup: {
     icon: 'i-mdi:format-superscript',
     label: '上标',
     shortcut: 'Crtl+.',
+    active: ['text'],
     action: () => focus.value?.toggleSuperscript().run()
   },
   sub: {
     icon: 'i-mdi:format-subscript',
     label: '下标',
     shortcut: 'Crtl+,',
+    active: ['text'],
     action: () => focus.value?.toggleSubscript().run()
   },
   img: {
@@ -312,3 +274,4 @@ watchEffect(() => {
   }
 }
 </style>
+../core/menu

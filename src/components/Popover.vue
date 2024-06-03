@@ -1,5 +1,5 @@
 <script lang='ts' setup>
-withDefaults(defineProps<{ trigger?: 'click' | 'hover', confirm?: string | boolean, onConfirm?: Function, close?: boolean, padding?: string }>(), { trigger: 'hover', confirm: true, close: true })
+withDefaults(defineProps<{ trigger?: 'click' | 'hover', place?: Pos, confirm?: string | boolean, onConfirm?: Function, close?: boolean, padding?: string }>(), { trigger: 'hover', place: 'bottom', confirm: true, close: true })
 const emit = defineEmits(['confirm'])
 const show = ref(false)
 const target = ref(null)
@@ -11,11 +11,10 @@ watch(hover, val => show.value = val)
 
 <template>
   <div ref="target" relative w-fit>
-    <div p8px @click="show = !show">
+    <div p6px @click="show = !show">
       <slot name="trigger"></slot>
     </div>
-    <div v-show="show" absolute z-100 bg-white shadow rounded-lg w-fit :style="`padding: ${padding || '16px'};`"
-      class="top-100% left-50% -translate-x-50%">
+    <div v-show="show" :class="['panel', place]" shadow rounded-lg w-fit :style="`padding: ${padding || '16px'};`">
       <span v-if="close" @click="show = false" float-right class="-mr12px -mt12px" i-mdi:close></span>
       <slot></slot>
       <button v-if="onConfirm" @click="show = false, emit('confirm')" float-right mt8px>{{ confirm || '确认' }}</button>
@@ -23,4 +22,8 @@ watch(hover, val => show.value = val)
   </div>
 </template>
 
-<style scoped lang='scss'></style>
+<style scoped lang='scss'>
+.panel {
+  @include place;
+}
+</style>

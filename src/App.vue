@@ -4,9 +4,8 @@ import { useAiEditor } from "@/hooks/editor"
 const editor = useAiEditor()
 </script>
 <template>
-  <!-- <Toolbar /> -->
   <bubble-menu v-if="editor" :editor="editor" :tippy-options="{ duration: 200 }">
-    <Toolbar />
+    <BubbleMenuItem />
   </bubble-menu>
   <editor-content :editor="editor" />
 </template>

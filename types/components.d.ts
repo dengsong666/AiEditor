@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AiEditor: typeof import('./../src/components/AiEditor.vue')['default']
+    BubbleMenu: typeof import('../src/components/BubbleMenuItem.vue')['default']
+    BubbleMenuItem: typeof import('./../src/components/BubbleMenuItem.vue')['default']
     ColorPicker: typeof import('./../src/components/ColorPicker.vue')['default']
     HelpCenter: typeof import('../src/components/More.vue')['default']
     InsertEmoji: typeof import('./../src/components/InsertEmoji.vue')['default']
@@ -15,7 +17,7 @@ declare module 'vue' {
     InsertLink: typeof import('./../src/components/InsertLink.vue')['default']
     InsertTable: typeof import('./../src/components/InsertTable.vue')['default']
     InsetEmoji: typeof import('../src/components/InsertEmoji.vue')['default']
-    Menu: typeof import('./../src/components/Menu.vue')['default']
+    Menu: typeof import('../src/components/BubbleMenuItem.vue')['default']
     More: typeof import('./../src/components/More.vue')['default']
     Popover: typeof import('./../src/components/Popover.vue')['default']
     Select: typeof import('./../src/components/Select.vue')['default']
@@ -30,6 +32,7 @@ declare module 'vue' {
     Tabs: typeof import('./../src/components/Tabs.vue')['default']
     Toolbar: typeof import('./../src/components/Toolbar.vue')['default']
     Tooltip: typeof import('./../src/components/Tooltip.vue')['default']
+    TreeSelect: typeof import('./../src/components/TreeSelect.vue')['default']
     Upload: typeof import('./../src/components/Upload.vue')['default']
   }
 }
