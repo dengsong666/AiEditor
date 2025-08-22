@@ -157,6 +157,9 @@ devDependencies:
   '@iconify-json/ant-design':
     specifier: ^1.1.16
     version: 1.1.16
+  '@iconify-json/hugeicons':
+    specifier: ^1.1.0
+    version: 1.1.0
   '@iconify-json/icon-park-outline':
     specifier: ^1.1.15
     version: 1.1.15
@@ -737,6 +740,12 @@ packages:
 
   /@iconify-json/ant-design@1.1.16:
     resolution: {integrity: sha512-DJ2BDf/XNuYu0p0zDQh3RM8FkPsp9GwZ7WytkVwU7cn73AgpNfOGc2P5zvZzgejx5YK0otG9MYi/cHI4qvfnVQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/hugeicons@1.1.0:
+    resolution: {integrity: sha512-MzzShBJQsOB92kzPMBe2dI35m0BrR7Z7yEQ0Al84ULQ46PRAAu+RBkqmTzqY+T2uBB1PeGe8sPs+8lGRXClGjg==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

@@ -1,6 +1,7 @@
 import Blockquote from '@tiptap/extension-blockquote'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
+import CharacterCount from '@tiptap/extension-character-count'
 import { Extension } from '@tiptap/vue-3'
 import './style.scss'
 /**
@@ -13,8 +14,9 @@ const DocumentExt = Document.extend({})
  * 默认快捷键 Control Alt 0
  */
 const ParagraphExt = Paragraph.extend({})
+const CharacterCountExt = CharacterCount.extend({})
 
 export const Block = Extension.create({
   name: 'block',
-  addExtensions: () => [BlockquoteExt, DocumentExt, ParagraphExt]
+  addExtensions: () => [BlockquoteExt, DocumentExt, ParagraphExt, CharacterCountExt]
 })

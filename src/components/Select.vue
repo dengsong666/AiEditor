@@ -1,32 +1,29 @@
 <script lang='ts' setup>
-withDefaults(defineProps<{ options: Option[], icon?: string, showArrow?: boolean }>(), { showArrow: true })
+const props = defineProps<{ options: SelectOption[], icon?: string, defaultValue?: any }>()
 const emit = defineEmits(['select'])
-const current = defineModel<Option>()
-const refPopover = ref()
+const current = defineModel<SelectOption>()
+const showPopover = ref(false)
+watchEffect(() => current.value = props.options.find(op => op.value == props.defaultValue))
 </script>
 
 <template>
-  <Popover ref="refPopover" padding="8px" :close="false">
+  <Popover padding="8px" :close="false" v-model="showPopover">
     <template #trigger>
-      <div flex>
+      <div flex p6px>
         <i :class="icon ?? current?.icon"></i>
-        <i v-if="showArrow" i-icon-park-outline:down transition-all :class="{ 'rotate-180': refPopover?.show }"></i>
+        <i i-icon-park-outline:down transition-all :class="{ 'rotate-180': showPopover }"></i>
       </div>
     </template>
     <div flex flex-col scrollbar-none>
-      <div v-for="op in options" :key="op.value" @click.stop="current = op, emit('select', op.value)" flex
-        justify-between px20px py6px hover:bg-gray-100>
+      <div v-for="op in options" :key="op.value" flex items-center justify-between py4px hover:bg-gray-100
+        @click.stop="current = op, emit('select', op.value)">
         <div flex items-center>
           <slot :op="op">
             <i v-if="op.icon" :class="op.icon"></i>
             <span ml8px text-nowrap>{{ op.label }}</span>
           </slot>
         </div>
-        <Select v-if="op?.children" :options="op.children" place="right" icon="i-icon-park-outline:right"
-          :show-arrow="false" @select="op.handler">
-        </Select>
-        <i v-else ml24px i-icon-park-outline:check
-          :style="`visibility: ${current?.value == op.value ? 'visible' : 'hidden'}`">
+        <i ml24px i-icon-park-outline:check :style="`visibility: ${current?.value == op.value ? 'visible' : 'hidden'}`">
         </i>
       </div>
     </div>

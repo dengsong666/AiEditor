@@ -1,17 +1,16 @@
 <script lang='ts' setup>
 withDefaults(defineProps<{ trigger?: 'click' | 'hover', place?: Pos, confirm?: string | boolean, onConfirm?: Function, close?: boolean, padding?: string }>(), { trigger: 'hover', place: 'bottom', confirm: true, close: true })
 const emit = defineEmits(['confirm'])
-const show = ref(false)
+const show = defineModel({ default: false })
 const target = ref(null)
 const hover = useElementHover(target)
 onClickOutside(target, () => show.value = false)
-defineExpose({ show })
 watch(hover, val => show.value = val)
 </script>
 
 <template>
-  <div ref="target" relative w-fit>
-    <div p6px @click="show = !show">
+  <div ref="target" relative>
+    <div @click="show = !show">
       <slot name="trigger"></slot>
     </div>
     <div v-show="show" :class="['panel', place]" shadow rounded-lg w-fit :style="`padding: ${padding || '16px'};`">

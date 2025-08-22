@@ -17,7 +17,7 @@ onMounted(() => arrivedState.right = false)
     <i v-show="!arrivedState.right" class="translate-y-50%" absolute right-0 i-icon-park-outline:right
       @click="x += 10"></i>
   </div>
-  <div mt16px overflow-y-auto scrollbar-none :style="`height:${height || '200px'}`">
+  <div ws-normal mt16px overflow-y-auto scrollbar-none :style="`width:${width || '250px'};height:${height || '200px'}`">
     <slot :name="active">啥也没有</slot>
   </div>
 </template>

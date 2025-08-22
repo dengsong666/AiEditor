@@ -10,7 +10,8 @@ const sizec = computed(() => `calc(100% + 4px + ${size.value})`)
   <div relative @mouseenter="show = true" @mouseleave="show = false">
     <slot></slot>
     <div v-show="show" :class="['content', place]">
-      <span absolute border="solid transparent" :style="`border-width: ${size}; border-${place}-color: ${bg};`"></span>
+      <span class="arrow" absolute border="solid transparent"
+        :style="`border-width: ${size}; border-${place}-color: ${bg};`"></span>
       <slot name="content">{{ text }}</slot>
     </div>
   </div>

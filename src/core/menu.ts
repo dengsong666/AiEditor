@@ -1,28 +1,28 @@
 // @unocss-include
-import { h } from "vue"
-import Upload from "@/components/Upload.vue"
+import ColorPicker from "@/components/ColorPicker.vue"
+import InsertEmoji from "@/components/InsertEmoji.vue"
 import InsertLink from "@/components/InsertLink.vue"
 import InsertTable from "@/components/InsertTable.vue"
-import InsertEmoji from "@/components/InsertEmoji.vue"
-import ColorPicker from "@/components/ColorPicker.vue"
+import Upload from "@/components/Upload.vue"
+import { h } from "vue"
 import * as command from "./command"
-export const basics = [
-  // {
-  //   icon: 'i-icon-park-outline:back',
-  //   label: '撤销',
-  //   value: 'undo',
-  //   shortcut: 'Ctrl+Z',
-  //   markdown: '',
-  //   handler: command.undo,
-  // },
-  // {
-  //   icon: 'i-icon-park-outline:next',
-  //   label: '重做',
-  //   value: 'redo',
-  //   shortcut: 'Ctrl+Y',
-  //   markdown: '',
-  //   handler: command.redo,
-  // },
+export const basics: MenuItem[] = [
+  {
+    icon: 'i-icon-park-outline:back',
+    label: '撤销',
+    value: 'undo',
+    shortcut: 'Ctrl+Z',
+    markdown: '',
+    handler: command.undo,
+  },
+  {
+    icon: 'i-icon-park-outline:next',
+    label: '重做',
+    value: 'redo',
+    shortcut: 'Ctrl+Y',
+    markdown: '',
+    handler: command.redo,
+  },
   {
     icon: 'i-icon-park-outline:text-bold',
     label: '加粗',
@@ -58,8 +58,14 @@ export const basics = [
     active: ['paragraph'],
     handler: command.toggleStrike,
   },
+  {
+    icon: h(InsertEmoji, { onInsert: command.insertContent }),
+    label: '表情',
+    active: ['text'],
+    value: 'emoji',
+  },
 ]
-export const text = [
+export const text: MenuItem[] = [
   {
     icon: 'i-icon-park-outline:quote',
     label: '引用',
@@ -118,40 +124,34 @@ export const text = [
   }
 ]
 
-export const table = [
+export const table: MenuItem[] = [
   {
     icon: h(InsertTable, { onInsert: command.insertTable }),
     label: '表格',
     value: 'table',
   },
 ]
-export const file = [
+export const file: MenuItem[] = [
   {
     icon: h(Upload, { onFinish: command.setFigure, icon: 'i-icon-park-outline:picture-one' }),
-    active: ['image'],
     label: '图像',
     value: 'image',
+    active: ['image'],
   },
   {
     icon: 'i-icon-park-outline:video-two',
     label: '视频',
-    active: ['video'],
     value: 'video',
+    active: ['video'],
   },
   {
     icon: 'i-icon-park-outline:paperclip',
     label: '附件',
-    active: ['attachment'],
     value: 'attachment',
-  },
-  {
-    icon: h(InsertEmoji, { onInsert: command.insertContent }),
-    label: '表情',
-    active: ['text'],
-    value: 'emoji',
+    active: ['attachment'],
   },
 ]
-export const code = [
+export const code: MenuItem[] = [
   {
     icon: 'i-icon-park-outline:code',
     label: '行内代码',
@@ -169,7 +169,7 @@ export const code = [
     handler: command.toggleCodeBlock,
   },
 ]
-export const list = [
+export const list: MenuItem[] = [
   {
     icon: 'i-icon-park-outline:ordered-list',
     label: '有序列表',
@@ -195,11 +195,11 @@ export const list = [
     handler: command.toggleTaskList,
   },
 ]
-export const head = [
+export const head: MenuItem[] = [
   {
     icon: 'i-icon-park-outline:h',
     label: '正文',
-    value: undefined,
+    value: 0,
     markdown: '',
     shortcut: 'Ctrl+Alt+0',
   },
@@ -246,7 +246,7 @@ export const head = [
     markdown: '###### ',
   },
 ]
-export const align = [
+export const align: MenuItem[] = [
   {
     icon: 'i-icon-park-outline:align-text-left',
     label: '左对齐',
@@ -280,7 +280,7 @@ export const fontsize = [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 56, 64, 
 export const fontfamily = [['微软雅黑', 'Microsoft YaHei'], ['宋体', 'SimSun'], ['黑体', 'SimHei'], ['楷体', 'KaiTi'], ['隶书', 'LiSu'], ['幼圆', 'YouYuan'], ['Arial'], ['Verdana']].map(([label, value = label]) => ({ label, value }))
 export const lineheight = [1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3].map(label => ({ label, value: `${label}em` }))
 
-export const more = [
+export const more: MenuItem[] = [
   {
     icon: 'i-icon-park-outline:helpcenter',
     label: '帮助中心',

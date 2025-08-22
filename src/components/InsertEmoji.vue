@@ -2,7 +2,6 @@
 import emoji from "@/assets/emoji.json"
 defineProps<{ icon?: string }>()
 const emit = defineEmits(['insert'])
-// const emoji = 
 </script>
 
 <template>

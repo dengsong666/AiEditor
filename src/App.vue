@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { EditorContent, BubbleMenu } from '@tiptap/vue-3'
-import { useAiEditor } from "@/hooks/editor"
+import { EditorContent, BubbleMenu, FloatingMenu, } from '@tiptap/vue-3'
+import { useAiEditor, words } from "@/hooks/editor"
 const editor = useAiEditor()
+const tippyOptions = { appendTo: document.body, maxWidth: 'unset', duration: 200 }
 </script>
 <template>
-  <bubble-menu v-if="editor" :editor="editor" :tippy-options="{ duration: 200 }">
-    <BubbleMenuItem />
+  <bubble-menu v-if="editor" :editor="editor" :tippy-options="tippyOptions">
+    <Menu></Menu>
   </bubble-menu>
+  <floating-menu v-if="editor" :editor="editor" :tippy-options="tippyOptions">
+    <Menu></Menu>
+  </floating-menu>
   <editor-content :editor="editor" />
+  <span float-right>{{ words }}</span>
 </template>
 <style lang="scss">
 .tiptap {
   padding: 8px;
+  outline: none;
 
   >*+* {
     margin-top: 0.75em;
