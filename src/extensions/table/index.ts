@@ -1,7 +1,4 @@
-import _Table from '@tiptap/extension-table'
-import TableCell from '@tiptap/extension-table-cell'
-import TableHeader from '@tiptap/extension-table-header'
-import TableRow from '@tiptap/extension-table-row'
+import { Table as _Table, TableCell, TableHeader, TableRow } from '@tiptap/extension-table'
 import { Extension } from '@tiptap/vue-3'
 import './style.scss'
 

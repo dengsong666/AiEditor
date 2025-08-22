@@ -1,5 +1,4 @@
 import { Extension } from "@tiptap/vue-3";
-import "@tiptap/extension-text-style";
 
 export type FontSizeOptions = {
   types: string[];

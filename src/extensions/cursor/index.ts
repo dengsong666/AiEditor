@@ -1,5 +1,4 @@
-import Gapcursor from '@tiptap/extension-gapcursor'
-import Dropcursor from '@tiptap/extension-dropcursor'
+import { Gapcursor, Dropcursor } from '@tiptap/extensions'
 import { Extension } from '@tiptap/vue-3'
 import './style.scss'
 

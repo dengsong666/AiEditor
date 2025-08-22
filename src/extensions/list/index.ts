@@ -1,8 +1,4 @@
-import BulletList from '@tiptap/extension-bullet-list'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
-import TaskItem from '@tiptap/extension-task-item'
-import TaskList from '@tiptap/extension-task-list'
+import { OrderedList, BulletList, ListItem, TaskList, TaskItem } from '@tiptap/extension-list'
 import { Extension } from '@tiptap/vue-3'
 import './style.scss'
 
@@ -25,5 +21,5 @@ const TaskItemExt = TaskItem.extend({})
 
 export const List = Extension.create({
   name: 'list',
-  addExtensions: () => [BulletListExt, OrderedListExt, ListItemExt, TaskListExt, TaskItemExt]
+  addExtensions: () => [OrderedListExt, BulletListExt, ListItemExt, TaskListExt, TaskItemExt]
 })

@@ -1,7 +1,7 @@
 import Blockquote from '@tiptap/extension-blockquote'
 import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
-import CharacterCount from '@tiptap/extension-character-count'
+import { CharacterCount } from '@tiptap/extensions'
 import { Extension } from '@tiptap/vue-3'
 import './style.scss'
 /**

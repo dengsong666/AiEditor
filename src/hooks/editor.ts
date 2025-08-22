@@ -1,7 +1,7 @@
 
 
 import Mention from '@tiptap/extension-mention'
-import { Block, Browser, Code, Cursor, Division, File, Head, List, Mark, Menu, Table } from "@/extensions"
+import { Block, Code, Cursor, Division, File, Head, List, Mark, Menu, Table } from "@/extensions"
 import { Editor, useEditor } from "@tiptap/vue-3"
 export let editor = shallowRef<Editor | undefined>(undefined)
 export const focus = computed(() => editor.value?.chain().focus())
@@ -11,7 +11,7 @@ export function useAiEditor(editable = true) {
     editable,
     content: localStorage.getItem('editor-content'),
     extensions: [
-      Block, Browser, Code, Cursor, Division, File, Head, List, Mark, Menu, Table,
+      Block, Code, Cursor, Division, File, Head, List, Mark, Menu, Table,
       Mention.configure({
         HTMLAttributes: {
           class: 'mention',
